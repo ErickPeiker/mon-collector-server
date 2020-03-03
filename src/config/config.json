@@ -1,0 +1,20 @@
+{
+	"development": false,
+	"devMysql": {
+		"username": "root",
+	    "password": "nGkaG5otl4D7DI6H",
+	    "host": "146.148.32.10", 
+	    "port": "1201",
+	    "database": "owlmo",
+	    "dialect": "mysql",
+	    "logging": true
+	},
+	"prodMysql": {
+		"username": "root",
+	    "password": "nGkaG5otl4D7DI6H",
+	    "host": "146.148.32.10", 
+	    "port": "1201",
+	    "database": "owlmo",
+	    "dialect": "mysql"
+	}
+}

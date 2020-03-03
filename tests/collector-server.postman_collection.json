@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "a7608d86-0650-439b-b3e8-9307b106e1d7",
+		"name": "collector-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{base_url}}/api/company/:idcompany",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/company/:idcompany",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"company",
+						":idcompany"
+					],
+					"variable": [
+						{
+							"key": "idcompany",
+							"value": "77addf8f-9cd4-11e9-8b7b-42010a21b002"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/equipment-types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/equipment-types",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"equipment-types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/item-types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/item-types",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"item-types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir incidente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7dd825c-638e-41a1-a381-a995bd565c2d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"description\":\"Primeiro incidente criado\",\r\n\t\"companyId\":\"631C666C-18F5-4C88-955C-96F394E33CBB\",\r\n\t\"createdAt\": {{$timestamp}}\t,\r\n\t\"updatedAt\": {{$timestamp}}\t\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/incident",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"incident"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar Incidente",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/incident?id=5d0a8b0d4da9810218458035",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"incident"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5d0a8b0d4da9810218458035"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/equipments",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"equipmentType\": {\r\n\t\t\"name\": \"Borda\",\r\n\t\t\"slug\": \"borda\"\r\n\t},\r\n\t\"name\": \"host1\",\r\n\t\"observation\": \"\",\r\n\t\"ip\": \"192.168.0.1\",\r\n\t\"parameters\": \"{'so': 'linux', 'collectorUrl':':9200'}\",\r\n\t\"isActive\": true,\r\n\t\"companyId\": \"3dc5561a-a034-11e9-8b7b-42010a21b002\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/equipments",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"equipments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/history-minute",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2bf241c8-5c99-4da4-9d32-4fd7b50d9ca8",
+						"exec": [
+							"var moment = require('moment');",
+							"postman.setGlobalVariable('ISOMinute', (moment().format('YYYY-MM-DD[T]HH:mm[:00.000]Z')));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISOMinute}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISOMinute}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 243221}\n\t\t},\n\t\t\"upsert\": true\n\t}\n},{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISOMinute}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISOMinute}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 9}\n\t\t},\n\t\t\"upsert\": true\n\t}\n}\n]"
+				},
+				"url": {
+					"raw": "{{base_url}}/history-minute",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"history-minute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/history-hour",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2bf241c8-5c99-4da4-9d32-4fd7b50d9ca8",
+						"exec": [
+							"var moment = require('moment');",
+							"postman.setGlobalVariable('ISOHour', (moment().format('YYYY-MM-DD[T]HH:[00:00.000]Z')));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISOHour}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISOHour}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 243221}\n\t\t},\n\t\t\"upsert\": true\n\t}\n},{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISOHour}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISOHour}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 9}\n\t\t},\n\t\t\"upsert\": true\n\t}\n}\n]"
+				},
+				"url": {
+					"raw": "{{base_url}}/history-hour",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"history-hour"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/history-day",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2bf241c8-5c99-4da4-9d32-4fd7b50d9ca8",
+						"exec": [
+							"var moment = require('moment');",
+							"postman.setGlobalVariable('ISODay', (moment().format('YYYY-MM-DD[T00:00:00.000]Z')));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISODay}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISODay}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 342212094}\n\t\t},\n\t\t\"upsert\": true\n\t}\n},{\n\t\"updateOne\": {\n\t\t\"filter\": {\n\t\t    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \"item\": \" 49090\",\n\t\t    \"date\": \"{{ISODay}}\"\n\t\t},\n\t\t\"update\": {\n\t\t    \"$set\": {\n\t\t    \t\"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n\t\t    \t\"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n\t\t    \t\"item\": \" 49090\",\n\t\t    \t\"date\": \"{{ISODay}}\"\n\t\t    },\n\t\t    \"$inc\": {\"value\": 342212094}\n\t\t},\n\t\t\"upsert\": true\n\t}\n}\n]"
+				},
+				"url": {
+					"raw": "{{base_url}}/history-day",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"history-day"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/history-month",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2bf241c8-5c99-4da4-9d32-4fd7b50d9ca8",
+						"exec": [
+							"var moment = require('moment');",
+							"postman.setGlobalVariable('ISOMonth', (moment().format('YYYY-MM[-01T00:00:00.000]Z')));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"equipmentId\": \"5f058d5b-2065-49c9-b140-28f05d593445\",\n    \"itemTypeId\": \"099a6e6e-e604-46d0-8208-83c3c971300d\",\n    \"item\": \" 49090\",\n    \"value\": 243221,\n    \"date\": \"{{ISOMonth}}\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/history-month",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"history-month"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
